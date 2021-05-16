@@ -29,8 +29,18 @@ pex_binary(
 #  See https://www.pantsbuild.org/docs/awslambda-python.
 #
 # Note: This has sdist dependencies, so it must be built on Linux.
-python_awslambda(
-    name="awslambda",
-    handler="awslambda.py:handler",
-    runtime="python3.7",
+#
+#python_awslambda(
+#    name="awslambda",
+#    handler="awslambda.py:handler",
+#    runtime="python3.7",
+#)
+
+python_requirements(
+    # module_mapping handles cases where the package has a different name
+    # to its import statement
+    module_mapping={
+        "ansicolors": ["colors"],
+        "setuptools": ["pkg_resources"],
+    },
 )

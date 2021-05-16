@@ -122,6 +122,10 @@ Solution: Drop `"<PATH>"` in `pants.toml`, see `interpreter_search_paths = ["<PY
 
 Recommendation: All devs exclusively use pyenv, across all platforms (linux, OS X).
 
+### Sometimes pants silently ignores changes to files
+
+Tricks to force a re-detection: TODO
+
 ## To be explored
 
 - Additional FastAPI service with partially overlaping dependencies as the existing FastAPI service
