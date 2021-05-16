@@ -102,6 +102,8 @@ You can simply execute to pex file!
 ./dist/apple-pie-api/pex_binary.pex
 ```
 
+And then send a request with `curl http://127.0.0.1:8096`.
+
 ## Issues encountered
 
 ### macOS Python 2.7
