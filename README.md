@@ -43,7 +43,21 @@ Interesting things to note:
 
 ## `apple-pie-api` The apple pie dummy project
 
-Project that's a FastAPI HTTP service, with pipenv as its packaging tool.
+Project that's a FastAPI HTTP service, with Pipenv as its packaging tool. The project-specific Pipenv tooling and the repo-wide pants tooling co-exist. Refer to `apple-pie-api/README.md` for the pretend "project-specific" documentation, which treats that as a project that's unaware that it sits inside a pants repo.
+
+### Build and execute
+
+Full build pipeline...
+
+```bash
+bash -c "\
+  cd apple-pie-api \
+    && pipenv lock -r > requirements.txt \
+"
+./pants package recipe-search-api:pex_binary
+```
+
+Run `./pants package apple-pie-api:pex_binary`. Inspect with `unzip -l dist/apple-pie-api/pex_binary.pex` or `unzip dist/apple-pie-api/pex_binary.pex -d dist/_unzip_apple-pie-api`.
 
 ## Issues encountered
 
