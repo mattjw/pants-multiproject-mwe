@@ -10,7 +10,6 @@ from numerics.pi import monte_carlo
 LOGGER = logging.getLogger(__name__)
 APP = FastAPI()
 
-
 @APP.get("/")
 async def root():
     return {"monte-carlo-pie": monte_carlo()}

@@ -18,7 +18,7 @@ backend_packages.add = [
 
 [source]
 # The Python source root is the repo root. See https://www.pantsbuild.org/docs/source-roots.
-root_patterns = ["/"]
+#root_patterns = ["/"]
 
 [python-setup]
 # The default interpreter compatibility for code in this repo. Individual targets can override
@@ -26,8 +26,8 @@ root_patterns = ["/"]
 #  https://www.pantsbuild.org/docs/python-interpreter-compatibility.
 interpreter_constraints = ["CPython==3.8.*"]
 
-# Use a constraints file. See https://www.pantsbuild.org/docs/python-third-party-dependencies.
-requirement_constraints = "constraints.txt"
+# Config to use a constraints file. See https://www.pantsbuild.org/docs/python-third-party-dependencies.
+#requirement_constraints = "constraints.txt"
 
 # We search for interpreters on both on the $PATH and in the `$(pyenv root)/versions` folder.
 #  If you're using macOS, you may want to leave off the <PATH> entry to avoid using the

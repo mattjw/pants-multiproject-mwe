@@ -17,7 +17,7 @@ This repo riffs off `https://github.com/pantsbuild/example-python`.
 
 ## Understanding dependencies and dependency inference
 
-Root level files: `BUILD`, `constraints.txt`, `requirements.txt`. To do: Clarify the role of these files.
+Root level files: `BUILD`, `constraints.txt`, and `requirements.txt`; also, `requirement_constraints = "constraints.txt"` in `pants.toml`. To do: Clarify the role of these files.
 
 See also https://www.pantsbuild.org/docs/python-third-party-dependencies
 
@@ -49,7 +49,7 @@ Interesting things to note:
 
 Project that's a FastAPI HTTP service, with Pipenv as its packaging tool. The project-specific Pipenv tooling and the repo-wide pants tooling co-exist. Refer to `apple-pie-api/README.md` for the pretend "project-specific" documentation, which treats that as a project that's unaware that it sits inside a pants repo.
 
-### Build and execute
+### Build
 
 Full build pipeline...
 
@@ -61,7 +61,38 @@ bash -c "\
 ./pants package recipe-search-api:pex_binary
 ```
 
-Run `./pants package apple-pie-api:pex_binary`. Inspect with `unzip -l dist/apple-pie-api/pex_binary.pex` or `unzip dist/apple-pie-api/pex_binary.pex -d dist/_unzip_apple-pie-api`.
+Then run `./pants package apple-pie-api:pex_binary`.
+
+Things to note about the build process...
+
+- Inspect the output pex with `unzip -l dist/apple-pie-api/pex_binary.pex` or `unzip dist/apple-pie-api/pex_binary.pex -d dist/_unzip_apple-pie-api`.
+- Inspect the resolved dependencies for the entry point, according to pants, with `./pants dependencies apple-pie-api/src/main.py`:
+
+  ```text
+  apple-pie-api/src/main.py:../apple-pie-api
+  apple-pie-api/src/numerics/pi.py:../../apple-pie-api
+  apple-pie-api:fastapi
+  apple-pie-api:uvicorn
+  ```
+
+- Some things that end up in the pex's `.deps` (`unzip -l dist/apple-pie-api/pex_binary.pex`):
+
+  ```text
+  .deps/click-7.1.2-py2.py3-none-any.whl/
+  .deps/fastapi-0.65.1-py3-none-any.whl/
+  .deps/h11-0.12.0-py3-none-any.whl/
+  .deps/pydantic-1.8.2-cp38-cp38-macosx_10_9_x86_64.whl/
+  .deps/starlette-0.14.2-py3-none-any.whl/
+  .deps/typing_extensions-3.10.0.0-py3-none-any.whl/
+  .deps/uvicorn-0.13.4-py3-none-any.whl/
+  ```
+
+  Note that there is _no_ `pycountry` in the `.deps` directory, even though it is in the `Pipfile` and `requirements.txt`. Explanation as follows...
+
+  - `pycountry` is not referenced in any of the project's source code. pants's dependency inference inspects the source code (i.e., `import` statements) and identifies dependencies that are genuinely required by the project. By running `./pants dependencies apple-pie-api:` you'll see that `apple-pie-api:pycountry` doesn't appear in the dependencies, whereas the dependencies we _would_ expect are listed, like `apple-pie-api:fastapi`.
+  - For the sake of demonstration, we could add an `import pycountry` to `apple-pie-api/src/main.py`, and then we'd see that `apple-pie-api:pycountry` would appear in the dependencies list and will be vendored into the pex file.
+  - What if we have a package that's imported by some magic but not referenced in an explicit `import`? You can use the `dependencies` arg of the `python_library` directive. This we force any explicitly listed dependencies into the build. More info [here](https://www.pantsbuild.org/docs/python-third-party-dependencies#basic-setup).
+  - What if we have a package that has a different package name to its import statements? E.g. ,`bs4` vs `beautifulsoup4`.  Name mapping rules can be specified via [`module_mapping`](https://www.pantsbuild.org/docs/python-third-party-dependencies#basic-setup).
 
 ## Issues encountered
 
@@ -80,3 +111,12 @@ Cause: Unwanted interaction between Pants and macOS system Python
 Solution: Drop `"<PATH>"` in `pants.toml`, see `interpreter_search_paths = ["<PYENV>"]`.
 
 Recommendation: All devs exclusively use pyenv, across all platforms (linux, OS X).
+
+## To be explored
+
+- Additional FastAPI service with partially overlaping dependencies as the existing FastAPI service
+- Library shared among multiple projects
+- Introspection and git-diff-based changes
+- Automated builds to docker images
+- Within-project tests
+- Cross-project tests

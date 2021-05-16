@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 fastapi = "~=0.63"
 uvicorn = "~=0.13.4"
+pycountry = "~=20.7.3"  # unused package, for demonstration purposes
 
 [requires]
 python_version = "3.8"
