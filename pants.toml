@@ -46,7 +46,7 @@ mypy_plugin = true
 config = "build-support/.flake8"
 
 [isort]
-config = [".isort.cfg"]
+config = ["build-support/.isort.cfg"]
 
 [mypy]
 config = "build-support/mypy.ini"

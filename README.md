@@ -2,6 +2,13 @@
 
 Minimal example of a multi-project set-up using pants.
 
+## Repo-wide things to try out
+
+
+```bash
+./pants lint ::  # lint all projects
+```
+
 ## Build a single project
 
 Build all outputs for the _helloworld_ project:
@@ -23,6 +30,10 @@ Interesting things to note:
 - `.deps/*`: Third party dependencies are vendored within the pex. E.g., `.deps/PyYAML-5.4.1-cp38-cp38-macosx_10_9_x86_64.whl/*`.
 - `__main__.py`: Boilerplate entry point wrapper, by pex/pants.
 - `helloworld/*` The project's first-party code.
+
+## The apples project
+
+Project that combines FastAPI and Pipenv.
 
 ## Issues encountered
 
