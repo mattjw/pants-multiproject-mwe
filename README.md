@@ -15,9 +15,13 @@ This repo riffs off `https://github.com/pantsbuild/example-python`.
   > A trailing single colon specifies a glob of targets at the specified location
   > A trailing double colon specifies a recursive glob of targets at the specified location
 
-## Some notes about this project
+## Understanding dependencies and dependency inference
 
-- Root level files: `BUILD`, `constraints.txt`, `requirements.txt`. To do: Clarify the role of these files.
+Root level files: `BUILD`, `constraints.txt`, `requirements.txt`. To do: Clarify the role of these files.
+
+See also https://www.pantsbuild.org/docs/python-third-party-dependencies
+
+Get pants's view of what the dependencies for a given file are: `./pants dependencies apple-pie-api/src/main.py`.
 
 ## Build a single project
 
