@@ -58,7 +58,7 @@ bash -c "\
   cd apple-pie-api \
     && pipenv lock -r > requirements.txt \
 "
-./pants package recipe-search-api:pex_binary
+./pants package apple-pie-api:pex_binary
 ```
 
 Then run `./pants package apple-pie-api:pex_binary`.
@@ -93,6 +93,14 @@ Things to note about the build process...
   - For the sake of demonstration, we could add an `import pycountry` to `apple-pie-api/src/main.py`, and then we'd see that `apple-pie-api:pycountry` would appear in the dependencies list and will be vendored into the pex file.
   - What if we have a package that's imported by some magic but not referenced in an explicit `import`? You can use the `dependencies` arg of the `python_library` directive. This we force any explicitly listed dependencies into the build. More info [here](https://www.pantsbuild.org/docs/python-third-party-dependencies#basic-setup).
   - What if we have a package that has a different package name to its import statements? E.g. ,`bs4` vs `beautifulsoup4`.  Name mapping rules can be specified via [`module_mapping`](https://www.pantsbuild.org/docs/python-third-party-dependencies#basic-setup).
+
+### Execute from pex
+
+You can simply execute to pex file!
+
+```bash
+./dist/apple-pie-api/pex_binary.pex
+```
 
 ## Issues encountered
 
