@@ -2,10 +2,16 @@
 
 Minimal example of a multi-project set-up using pants.
 
+This repo riffs off `https://github.com/pantsbuild/example-python`.
+
 ## Repo-wide things to try out
 
 - `./pants lint ::` Lint all projects
 - `./pants help goals` List all the pants goals; e.g., this will remind you you have `./pants fmt` available, which will black-format a project.
+
+## Some notes about this project
+
+- Root level files: `BUILD`, `constraints.txt`, `requirements.txt`. To do: Clarify the role of these files.
 
 ## Build a single project
 
