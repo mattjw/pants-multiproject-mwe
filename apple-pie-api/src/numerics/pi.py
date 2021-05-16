@@ -1,11 +1,10 @@
-import random as r
 import math as m
+import random as r
 
 
 def monte_carlo() -> float:
-    """
-    Calculate pi using the Monte Carlo method 🎲.
-    
+    """Calculate pi using the Monte Carlo method 🎲.
+
     Borrowed from https://gist.github.com/louismullie/3769218
     """
     # Number of darts that land inside.
@@ -16,8 +15,8 @@ def monte_carlo() -> float:
     # Iterate for the number of darts.
     for i in range(0, total):
         # Generate random x, y in [0, 1].
-        x2 = r.random()**2
-        y2 = r.random()**2
+        x2 = r.random() ** 2
+        y2 = r.random() ** 2
 
         # Increment if inside unit circle.
         if m.sqrt(x2 + y2) < 1.0:

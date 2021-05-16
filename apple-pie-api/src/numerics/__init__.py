@@ -1,3 +1,1 @@
-"""
-Pointless sub-package for sake of demonstration.
-"""
+"""Pointless sub-package for sake of demonstration."""

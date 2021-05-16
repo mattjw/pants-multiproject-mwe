@@ -1,11 +1,10 @@
-from subprocess import run
-import os
 import logging
+import os
 import sys
+from subprocess import run
 
-from fastapi import FastAPI
 import uvicorn
-
+from fastapi import FastAPI
 from numerics.pi import monte_carlo
 
 LOGGER = logging.getLogger(__name__)
@@ -15,6 +14,7 @@ APP = FastAPI()
 @APP.get("/")
 async def root():
     return {"monte-carlo-pie": monte_carlo()}
+
 
 if __name__ == "__main__":
     PORT = int(os.getenv("PORT", "8096"))
@@ -39,4 +39,4 @@ if __name__ == "__main__":
             check=False,
         )
     else:
-        uvicorn.run(APP, host=HOST, port=PORT, debug=True, log_config=CONFIG_FILE_PATH)
+        uvicorn.run(APP, host=HOST, port=PORT, debug=True)

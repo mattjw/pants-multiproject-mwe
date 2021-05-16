@@ -4,10 +4,8 @@ Minimal example of a multi-project set-up using pants.
 
 ## Repo-wide things to try out
 
-
-```bash
-./pants lint ::  # lint all projects
-```
+- `./pants lint ::` Lint all projects
+- `./pants help goals` List all the pants goals; e.g., this will remind you you have `./pants fmt` available, which will black-format a project.
 
 ## Build a single project
 
