@@ -8,6 +8,12 @@ This repo riffs off `https://github.com/pantsbuild/example-python`.
 
 - `./pants lint ::` Lint all projects
 - `./pants help goals` List all the pants goals; e.g., this will remind you you have `./pants fmt` available, which will black-format a project.
+- `./pants help` Pants CLI help.
+- `./pants list ::` List all targets that match the `::` pattern. The `::` arg can be replaced by any pants _Address_ (read docs [here](https://www.pantsbuild.org/v2.0/docs/targets#target-addresses)). `::` is a special _target selector_ that matches "everything", so this lists all targets in this repo. Notes on selectors:
+
+  > Pants supports two globbing target selectors, as a convenience on the command-line. These forms are not allowed in BUILD files.
+  > A trailing single colon specifies a glob of targets at the specified location
+  > A trailing double colon specifies a recursive glob of targets at the specified location
 
 ## Some notes about this project
 
