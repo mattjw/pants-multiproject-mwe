@@ -31,9 +31,9 @@ Interesting things to note:
 - `__main__.py`: Boilerplate entry point wrapper, by pex/pants.
 - `helloworld/*` The project's first-party code.
 
-## The apples project
+## `apple-pie-api` The apple pie dummy project
 
-Project that combines FastAPI and Pipenv.
+Project that's a FastAPI HTTP service, with pipenv as its packaging tool.
 
 ## Issues encountered
 
