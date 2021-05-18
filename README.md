@@ -126,6 +126,36 @@ Recommendation: All devs exclusively use pyenv, across all platforms (linux, OS 
 
 Tricks to force a re-detection: TODO
 
+Notes:
+
+- Caches are held at `ls ~/.cache/pants`
+
+### `No module named main`
+
+And also the warning `Pants cannot safely infer a dependency because >1 target exports this module, so it is ambiguous which to use`.
+
+Example: This occurred when `apple-pie-api` and `randmoji-api` both had a Fast API dependency, in their separate requirements.txt files.
+
+When running `./pants dependencies apple-pie-api:`, we get warning...
+
+```text
+21:56:43.18 [WARN] The target apple-pie-api imports `fastapi.FastAPI`, but Pants cannot safely infer a dependency because >1 target exports this module, so it is ambiguous which to use: ['apple-pie-api:fastapi', 'randmoji-api:fastapi'].
+
+Please explicitly include the dependency you want in the `dependencies` field of apple-pie-api, or ignore the ones you do not want by prefixing with `!` or `!!` so that <=1 targets are left.
+
+Alternatively, you can remove the ambiguity by deleting/changing some of the targets so that only 1 target exports this module. Refer to https://www.pantsbuild.org/v2.4/docs/troubleshooting#import-errors-and-missing-dependencies.
+21:56:43.18 [WARN] The target apple-pie-api imports `uvicorn`, but Pants cannot safely infer a dependency because >1 target exports this module, so it is ambiguous which to use: ['apple-pie-api:uvicorn', 'randmoji-api:uvicorn'].
+```
+
+And when executing `./dist/apple-pie-api/pex_binary.pex`:
+
+```text
+...
+ImportError: No module named main
+```
+
+Resolution: TODO
+
 ## To be explored
 
 - Additional FastAPI service with partially overlaping dependencies as the existing FastAPI service

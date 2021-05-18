@@ -4,8 +4,8 @@ import sys
 from subprocess import run
 
 import uvicorn
+from emoji_utils import Emoji, random_emoji
 from fastapi import FastAPI
-from numerics.pi import monte_carlo
 
 LOGGER = logging.getLogger(__name__)
 APP = FastAPI()
@@ -13,7 +13,8 @@ APP = FastAPI()
 
 @APP.get("/")
 async def root():
-    return {"monte-carlo-pie": monte_carlo()}
+    emoji: Emoji = random_emoji()
+    return {"name": emoji.name, "emoji": emoji.emoji}
 
 
 if __name__ == "__main__":
