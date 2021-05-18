@@ -1,9 +1,9 @@
 """Pointless sub-package for sake of demonstration."""
 
 import random
-from typing import Dict
+from typing import Dict, List
 
-from dataclass import dataclass
+from dataclasses import dataclass
 
 
 @dataclass

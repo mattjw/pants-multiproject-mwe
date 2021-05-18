@@ -168,6 +168,8 @@ Notes from the pants docs:
 >
 > Pants selects requirement subsets as needed, so adding requirements to a global requirements.txt does not add unnecessary dependencies or bloat.
 
+Also, the two `src/main.py` for multiple projects will cause dependency ambiguity too. To fix this, use `dependencies=`. See this pants Slack [thread](https://pantsbuild.slack.com/archives/C046T6T9U/p1621374530033200) for more info.
+
 ## To be explored
 
 - Additional FastAPI service with partially overlaping dependencies as the existing FastAPI service
