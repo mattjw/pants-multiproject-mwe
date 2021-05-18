@@ -7,6 +7,9 @@ python_library(
 pex_binary(
     name="pex_binary",
     entry_point="src/main.py",
+    dependencies=[
+        "apple-pie-api"
+    ],
 )
 
 # You need `python_requirements` to teach pants that this project has third-party requirements
