@@ -154,7 +154,19 @@ And when executing `./dist/apple-pie-api/pex_binary.pex`:
 ImportError: No module named main
 ```
 
-Resolution: TODO
+Resolution...
+
+Notes from the pants docs:
+
+> However if those requirements overlap there will be multiple targets for the same package, and Pants will not be able to infer which of them a dependency should be on.
+>
+> If the version constraints for the overlapping requirements do not conflict, you may wish to refactor the common requirements out of your requirements files and include them with -r common-requirements.txt. Then dependency inference will see a single target for each of those common requirements.
+>
+> If the version constraints do conflict, or if you otherwise cannot refactor them out, then you will have to specify the relevant dependencies manually.
+>
+> ...
+>
+> Pants selects requirement subsets as needed, so adding requirements to a global requirements.txt does not add unnecessary dependencies or bloat.
 
 ## To be explored
 
@@ -164,3 +176,8 @@ Resolution: TODO
 - Automated builds to docker images
 - Within-project tests
 - Cross-project tests
+
+## Candidates for additional tooling
+
+- Validate that Pipfile exports are synced with their output requirements.txt
+- Auto-gen project requirements as "distinct requirements" from the common requirements.
