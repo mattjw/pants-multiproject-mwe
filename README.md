@@ -104,6 +104,14 @@ You can simply execute to pex file!
 
 And then send a request with `curl http://127.0.0.1:8096`.
 
+### Test
+
+(WIP)
+
+```bash
+./pants test apple-pie-api:
+```
+
 ## Issues encountered
 
 ### macOS Python 2.7
@@ -176,7 +184,7 @@ Also, the two `src/main.py` for multiple projects will cause dependency ambiguit
 - Library shared among multiple projects
 - Introspection and git-diff-based changes
 - Automated builds to docker images
-- Within-project tests
+- Project tests
 - Cross-project tests
 
 ## Candidates for additional tooling

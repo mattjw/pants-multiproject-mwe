@@ -1,4 +1,5 @@
 python_library(
+    name="lib",
     sources=[
         "src/**/*.py"
     ]
@@ -8,8 +9,23 @@ pex_binary(
     name="pex_binary",
     entry_point="src/main.py",
     dependencies=[
-        "apple-pie-api"
+        ":lib"
     ],
+)
+
+python_tests(
+    name="unit",
+    timeout=120,
+    sources=[
+        "tests/unit/**/test_*.py",
+        #"conftest.py",
+    ],
+    dependencies=[
+        ":lib"
+    ],
+    tags=[
+        "unit_test"
+    ]
 )
 
 # You need `python_requirements` to teach pants that this project has third-party requirements
