@@ -4,18 +4,18 @@ Returns apple pies.
 
 _Treat this project as if it were a self-contained project, that additionally happens to sit within a pants monorepo._
 
-## Get running
+## Get running, as an individual poetry project
 
 Install deps...
 
 ```bash
-pipenv install --deploy
+poetry install
 ```
 
 Run service...
 
 ```bash
-pipenv run python src/main.py --reload
+poetry run python src/main.py
 ```
 
-Query it with `curl localhost:8096`
+Query it with `curl localhost:8096`.

@@ -23,45 +23,30 @@ See also https://www.pantsbuild.org/docs/python-third-party-dependencies
 
 Get pants's view of what the dependencies for a given file are: `./pants dependencies apple-pie-api/src/main.py`.
 
-## Build a single project
+## Looking inside a pex file
 
-Build all outputs for the _helloworld_ project:
+Imagine unzipping the contents of a hypothetical project with `unzip dist/helloworld/pex_binary.pex -d dist/_unzip_helloworld`.
 
-```bash
-./pants package helloworld:
-```
-
-Inspect the pex:
-
-```bash
-unzip -l dist/helloworld/pex_binary.pex
-```
-
-Or unzip the contents with `unzip dist/helloworld/pex_binary.pex -d dist/_unzip_helloworld`.
-
-Interesting things to note:
+Interesting things you'd find in there:
 
 - `.deps/*`: Third party dependencies are vendored within the pex. E.g., `.deps/PyYAML-5.4.1-cp38-cp38-macosx_10_9_x86_64.whl/*`.
 - `__main__.py`: Boilerplate entry point wrapper, by pex/pants.
 - `helloworld/*` The project's first-party code.
 
+
 ## `apple-pie-api` The apple pie dummy project
 
-Project that's a FastAPI HTTP service, with Pipenv as its packaging tool. The project-specific Pipenv tooling and the repo-wide pants tooling co-exist. Refer to `apple-pie-api/README.md` for the pretend "project-specific" documentation, which treats that as a project that's unaware that it sits inside a pants repo.
+Project that's a **FastAPI** HTTP service, with **poetry** as its packaging tool. The project-specific poetry tooling and the repo-wide pants tooling co-exist. Refer to `apple-pie-api/README.md` for the pretend "project-specific" documentation, which treats that as a project that's unaware that it sits inside a pants repo.
 
 ### Build
 
-Full build pipeline...
+pants docs on poetry integration [here](https://www.pantsbuild.org/v2.6/docs/python-third-party-dependencies#poetry-integration).
+
+Full build pipeline. That's unique about this project is that pants natively interprets poetry files. No need for intermediate translation eg no need for `pipenv -> requirements.txt -> pants deps`.
 
 ```bash
-bash -c "\
-  cd apple-pie-api \
-    && pipenv lock -r > requirements.txt \
-"
 ./pants package apple-pie-api:pex_binary
 ```
-
-Then run `./pants package apple-pie-api:pex_binary`.
 
 Things to note about the build process...
 
@@ -100,6 +85,39 @@ You can simply execute to pex file!
 
 ```bash
 ./dist/apple-pie-api/pex_binary.pex
+```
+
+And then send a request with `curl http://127.0.0.1:8096`.
+
+## `randmoji-api` The random emoji project
+
+Project that's a **FastAPI** HTTP service, with **Pipenv** as its packaging tool. The project-specific Pipenv tooling and the repo-wide pants tooling co-exist. Refer to `randmoji-api/README.md` for the pretend "project-specific" documentation, which treats that as a project that's unaware that it sits inside a pants repo.
+
+### Build
+
+Full build pipeline. This one's unique because the `randmoji-api` project uses pipenv, which isn't natively understood by poetry, so we generate a `requriements.txt` off it.
+
+```bash
+bash -c "\
+  cd randmoji-api \
+    && pipenv lock -r > requirements.txt \
+"
+./pants package randmoji-api:pex_binary
+```
+
+Then run `./pants package randmoji-api:pex_binary`.
+
+Things to note about the build process...
+
+- Inspect the output pex with `unzip -l dist/randmoji-api/pex_binary.pex` or `unzip dist/randmoji-api/pex_binary.pex -d dist/_unzip_randmoji-api`.
+- Inspect the resolved dependencies for the entry point, according to pants, with `./pants dependencies randmoji-api/src/main.py`.
+
+### Execute from the built pex
+
+You can simply execute to pex file!
+
+```bash
+./dist/randmoji-api/pex_binary.pex
 ```
 
 And then send a request with `curl http://127.0.0.1:8096`.

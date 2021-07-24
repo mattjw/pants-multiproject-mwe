@@ -1,0 +1,20 @@
+# This is config file used by potery. pants also understands some parts of this file
+# and interpret for third party deps
+# Read more: https://www.pantsbuild.org/v2.6/docs/python-third-party-dependencies#poetry-integration
+
+# This heading won't cause issues, but its content isn't considered
+[tool.poetry]
+name = "apple-pie-api"
+version = "1.0.0"
+description = "Apple Pie API"
+authors = ["Matt <mattjw@mattjw.net>"]
+
+# This heading is understood by pants 
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "~=0.63"
+uvicorn = "~=0.13.4"
+pycountry = "~=20.7.3"  # unused package, for demonstration purposes
+
+# This heading is understood by pants
+[tool.poetry.dev-dependencies]

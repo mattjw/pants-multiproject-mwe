@@ -12,8 +12,9 @@ pex_binary(
     ],
 )
 
-# You need `python_requirements` to teach pants that this project has third-party requirements
-# Without this, no requirements will be bundled. By including this directive, pants
-# will try to find the `requirements.txt` file for this project (by default assumed
-# to be at /apple-pie-api/requirements.txt)
-python_requirements()
+# `poetry_requirements` (as an alternative to `python_requirements`) is used to
+# teach pants that this project has third-party requirements Without this, no
+# requirements will be bundled. By including this directive, pants will try to
+# find the `pyproject.toml` file for this project (by default assumed to be at
+# `/apple-pie-api/pyproject.toml`)
+poetry_requirements()
